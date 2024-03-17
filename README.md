@@ -1,2 +1,2 @@
 # Game with pygame
- Criação de um jogo usando pygame
+Esse jogo é uma versão em pygame do jogo que eu fiz no curso do cc50
