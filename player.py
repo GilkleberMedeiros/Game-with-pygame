@@ -41,8 +41,8 @@ class Player():
     
     def get_colission_list(self, rect: Rect, colission_list: list) -> list:
         """
-            Verify if a rect is in a colission list
-            with 1 and -1 tolerance
+            Remove a rect if is in a colission list
+            with +1 and -1 tolerance
             param: rect, list
             return: list
         """
