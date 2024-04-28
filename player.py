@@ -16,13 +16,13 @@ class Player():
 
         # Move the Player
         keys = key.get_pressed()
-        if keys[K_LEFT] and self.colission(self.pos[0] - 30 * self.dt, "x"):
+        if keys[K_LEFT] and self.colission(self.pos[0] - 1, "x"):
             self.pos[0] -= 30 * self.dt
-        if keys[K_RIGHT] and self.colission(self.pos[0] + 30 * self.dt, "x"):
+        if keys[K_RIGHT] and self.colission(self.pos[0] + 1, "x"):
             self.pos[0] += 30 * self.dt
-        if keys[K_DOWN] and self.colission(self.pos[1] + 30 * self.dt, "y"):
+        if keys[K_DOWN] and self.colission(self.pos[1] + 1, "y"):
             self.pos[1] += 30 * self.dt
-        if keys[K_UP] and self.colission(self.pos[1] + 30 * self.dt, "y"):
+        if keys[K_UP] and self.colission(self.pos[1] + 1, "y"):
             self.pos[1] -= 30 * self.dt
         
         self.dt = clock.tick(60) / 1000
