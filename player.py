@@ -104,20 +104,3 @@ class Wall():
     def redraw(self):
         draw.rect(self.screen, (100, 100, 100), tuple(self.rect))
 
-
-def colission_other():
-    """Check if every point of a rect is inside of another"""
-    points = []
-    for i in range(self.rect[0], self.rect[0] + self.rect[2] + 1):
-        for j in range(self.rect[1], self.rect[1] + self.rect[3] + 1):
-            points.append([i, j])
-    colission_list = Files.rects
-    for i in colission_list:
-        for j in points:
-            x = (j[0] <= (i[0] + i[2]) and \
-                j[0] >= i[0])
-            y = (j[1] <= (i[1] + i[3]) and \
-                j[1] >= i[1])
-            if x and y:
-                return False
-    return True
