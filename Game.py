@@ -1,41 +1,43 @@
-import pygame
-import player as p
-
-pygame.init()
-screen = pygame.display.set_mode(size=(810, 710))
-clock = pygame.time.Clock()
-running = True
-player = p.Player(screen, 30, 30, 32, 32)
-brick = p.Wall(screen, 150, 150, 32, 32)
+from pygame import *
+from player import *
 
 
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-    
-    player.movement()
-    screen.fill((0, 0, 0))
-    player.redraw()
-    brick.redraw()
+# Helpers
+dt = 0.0
+screen = display.set_mode(size=(810, 710))
 
-    pygame.display.update()
-    
-
-    clock.tick(60)
-
-
-pygame.quit()
+# Configs
+objSize = 32
 
 class Game():
     def __init__(self):
-        pygame.init()
-        self.screen = pygame.display.set_mode(size=(810, 710))
-        self.clock = pygame.time.Clock()
-        self.player = p.Player(screen, 30, 30, 32, 32)
-        self.running = True
+        init()
+        self.player = Player(screen, 30, 30, objSize, objSize)
+
+    def loop(self):
+        global dt
+        running = True
+        clock = time.Clock()
+        while running:
+            for e in event.get():
+                if e.type == QUIT:
+                    running = False
+
+            self.update()
+            dt = clock.tick(60) / 1000
+        
+    def update(self):
+        global screen
+        self.player.movement(dt)
+        screen.fill((0, 0, 0))
+
+        for obj in gameObjects:
+            obj.redraw()
+        
+        display.update()
 
 
 if __name__ == "__main__":
     game = Game()
     game.loop()
+    quit()

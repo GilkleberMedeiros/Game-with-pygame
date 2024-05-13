@@ -1,34 +1,28 @@
-from pygame import *
-from files import *
+from Globals import *
+
 
 class Player():
     # '->' significa que a função retorna None
     def __init__(self, screen, x, y, width, heigth) -> None:
         self.screen = screen
-        # dt para mover na velocidade dos frames por segundo
-        self.dt = 0
         self.pos = [x, y, width, heigth]
-        self.rect = self.screen.blit(Files.PlayerIdle, (self.pos[0], self.pos[1]))
-        Files.rects.append((self.rect, self.__class__))
+        self.rect = screen.blit(PlayerIdle, (self.pos[0], self.pos[1]))
+        rects.append((self.rect, self.__class__))
+        gameObjects.append(self)
 
-    def movement(self) -> None:
-        clock = time.Clock()
-
-        # Move the Player
+    def movement(self, dt) -> None:
         keys = key.get_pressed()
         if keys[K_LEFT] and self.colission((self.pos[0] / 1) - 1, "x"):
-            self.pos[0] -= 30 * self.dt
+            self.pos[0] -= 30 * dt
         if keys[K_RIGHT] and self.colission((self.pos[0] / 1) + 1, "x"):
-            self.pos[0] += 30 * self.dt
+            self.pos[0] += 30 * dt
         if keys[K_DOWN] and self.colission((self.pos[1] / 1) + 1, "y"):
-            self.pos[1] += 30 * self.dt
+            self.pos[1] += 30 * dt
         if keys[K_UP] and self.colission((self.pos[1] / 1) - 1, "y"):
-            self.pos[1] -= 30 * self.dt
-        
-        self.dt = clock.tick(60) / 1000
+            self.pos[1] -= 30 * dt
 
     def redraw(self) -> None:
-        self.rect = self.screen.blit(Files.PlayerIdle, (self.pos[0], self.pos[1]))
+        self.rect = self.screen.blit(PlayerIdle, (self.pos[0], self.pos[1]))
     
     def colission(self, f_pos: float | int, direc: str) -> bool:
         """
@@ -47,7 +41,7 @@ class Player():
                   [self.rect[0] + self.rect[2], self.rect[1]], # :right upper 
                   [self.rect[0], self.rect[1] + self.rect[3]], # :left lower
                   [self.rect[0] + self.rect[2], self.rect[1] + self.rect[3]]] # :right lower
-        for i in Files.rects:
+        for i in rects:
             if i[1] == Player:
                 continue
 
@@ -95,16 +89,15 @@ class Player():
                 return_list.remove(i)
 
         return return_list
-
-
-        
+    
 
 class Wall():
     def __init__(self, screen, x, y, width, heigth):
         self.screen = screen
         self.rect = [x, y, width, heigth]
         draw.rect(self.screen, (100, 100, 100), tuple(self.rect))
-        Files.rects.append((Rect(self.rect), self.__class__))
+        rects.append((self.rect, self.__class__))
+        gameObjects.append(self)
 
     def redraw(self):
         draw.rect(self.screen, (100, 100, 100), tuple(self.rect))
