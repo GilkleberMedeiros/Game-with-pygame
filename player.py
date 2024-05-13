@@ -9,6 +9,7 @@ class Player():
         self.dt = 0
         self.pos = [x, y, width, heigth]
         self.rect = self.screen.blit(Files.PlayerIdle, (self.pos[0], self.pos[1]))
+        Files.rects.append((self.rect, self.__class__))
 
     def movement(self) -> None:
         clock = time.Clock()
@@ -47,26 +48,30 @@ class Player():
                   [self.rect[0], self.rect[1] + self.rect[3]], # :left lower
                   [self.rect[0] + self.rect[2], self.rect[1] + self.rect[3]]] # :right lower
         for i in Files.rects:
+            if i[1] == Player:
+                continue
+
             # xy1 True if left upper corner inside of another rect
-            xy1 = (corners[0][0] <= (i[0] + i[2]) and \
-                   corners[0][0] >= i[0]) and \
-                  (corners[0][1] <= (i[1] + i[3]) and \
-                   corners[0][1] >= i[1])
+            xy1 = (corners[0][0] <= (i[0][0] + i[0][2]) and \
+                   corners[0][0] >= i[0][0]) and \
+                  (corners[0][1] <= (i[0][1] + i[0][3]) and \
+                   corners[0][1] >= i[0][1])
             # xy2 True if right upper corner inside of another rect
-            xy2 = (corners[1][0] <= (i[0] + i[2]) and \
-                   corners[1][0] >= i[0]) and \
-                  (corners[1][1] <= (i[1] + i[3]) and \
-                   corners[1][1] >= i[1])
+            xy2 = (corners[1][0] <= (i[0][0] + i[0][2]) and \
+                   corners[1][0] >= i[0][0]) and \
+                  (corners[1][1] <= (i[0][1] + i[0][3]) and \
+                   corners[1][1] >= i[0][1])
             # xy3 True if left lower corner inside of another rect
-            xy3 = (corners[2][0] <= (i[0] + i[2]) and \
-                   corners[2][0] >= i[0]) and \
-                  (corners[2][1] <= (i[1] + i[3]) and \
-                   corners[2][1] >= i[1])
+            xy3 = (corners[2][0] <= (i[0][0] + i[0][2]) and \
+                   corners[2][0] >= i[0][0]) and \
+                  (corners[2][1] <= (i[0][1] + i[0][3]) and \
+                   corners[2][1] >= i[0][1])
             # xy4 True if right lower corner inside of another rect
-            xy4 = (corners[3][0] <= (i[0] + i[2]) and \
-                   corners[3][0] >= i[0]) and \
-                  (corners[3][1] <= (i[1] + i[3]) and \
-                   corners[3][1] >= i[1])
+            xy4 = (corners[3][0] <= (i[0][0] + i[0][2]) and \
+                   corners[3][0] >= i[0][0]) and \
+                  (corners[3][1] <= (i[0][1] + i[0][3]) and \
+                   corners[3][1] >= i[0][1])
+            
             if xy1 or xy2 or xy3 or xy4:
                 return False
         return True
@@ -99,7 +104,7 @@ class Wall():
         self.screen = screen
         self.rect = [x, y, width, heigth]
         draw.rect(self.screen, (100, 100, 100), tuple(self.rect))
-        Files.rects.append(Rect(self.rect))
+        Files.rects.append((Rect(self.rect), self.__class__))
 
     def redraw(self):
         draw.rect(self.screen, (100, 100, 100), tuple(self.rect))
