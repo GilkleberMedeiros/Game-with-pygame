@@ -6,7 +6,7 @@ class Player():
     def __init__(self, screen, x, y, width, heigth) -> None:
         self.screen = screen
         self.pos = [x, y, width, heigth]
-        self.rect = screen.blit(PlayerIdle, (self.pos[0], self.pos[1]))
+        self.rect = screen.blit(PlayerIdle, Rect(self.pos))
         rects.append((self.rect, self.__class__))
         gameObjects.append(self)
 
@@ -22,7 +22,7 @@ class Player():
             self.pos[1] -= 30 * dt
 
     def redraw(self) -> None:
-        self.rect = self.screen.blit(PlayerIdle, (self.pos[0], self.pos[1]))
+        self.rect = self.screen.blit(PlayerIdle, Rect(self.pos))
     
     def colission(self, f_pos: float | int, direc: str) -> bool:
         """
@@ -38,32 +38,32 @@ class Player():
 
         # Corners of player rect
         corners = [[self.rect[0], self.rect[1]], # :left upper
-                  [self.rect[0] + self.rect[2], self.rect[1]], # :right upper 
-                  [self.rect[0], self.rect[1] + self.rect[3]], # :left lower
-                  [self.rect[0] + self.rect[2], self.rect[1] + self.rect[3]]] # :right lower
+                  [self.rect[0] + self.rect[2] - 1, self.rect[1]], # :right upper 
+                  [self.rect[0], self.rect[1] + self.rect[3] - 1], # :left lower
+                  [self.rect[0] + self.rect[2] - 1, self.rect[1] + self.rect[3] - 1]] # :right lower
         for i in rects:
             if i[1] == Player:
                 continue
 
             # xy1 True if left upper corner inside of another rect
-            xy1 = (corners[0][0] <= (i[0][0] + i[0][2]) and \
+            xy1 = (corners[0][0] <= (i[0][0] + i[0][2] - 1) and \
                    corners[0][0] >= i[0][0]) and \
-                  (corners[0][1] <= (i[0][1] + i[0][3]) and \
+                  (corners[0][1] <= (i[0][1] + i[0][3] - 1) and \
                    corners[0][1] >= i[0][1])
             # xy2 True if right upper corner inside of another rect
-            xy2 = (corners[1][0] <= (i[0][0] + i[0][2]) and \
+            xy2 = (corners[1][0] <= (i[0][0] + i[0][2] - 1) and \
                    corners[1][0] >= i[0][0]) and \
-                  (corners[1][1] <= (i[0][1] + i[0][3]) and \
+                  (corners[1][1] <= (i[0][1] + i[0][3] - 1) and \
                    corners[1][1] >= i[0][1])
             # xy3 True if left lower corner inside of another rect
-            xy3 = (corners[2][0] <= (i[0][0] + i[0][2]) and \
+            xy3 = (corners[2][0] <= (i[0][0] + i[0][2] - 1) and \
                    corners[2][0] >= i[0][0]) and \
-                  (corners[2][1] <= (i[0][1] + i[0][3]) and \
+                  (corners[2][1] <= (i[0][1] + i[0][3] - 1) and \
                    corners[2][1] >= i[0][1])
             # xy4 True if right lower corner inside of another rect
-            xy4 = (corners[3][0] <= (i[0][0] + i[0][2]) and \
+            xy4 = (corners[3][0] <= (i[0][0] + i[0][2] - 1) and \
                    corners[3][0] >= i[0][0]) and \
-                  (corners[3][1] <= (i[0][1] + i[0][3]) and \
+                  (corners[3][1] <= (i[0][1] + i[0][3] - 1) and \
                    corners[3][1] >= i[0][1])
             
             if xy1 or xy2 or xy3 or xy4:
@@ -95,10 +95,21 @@ class Wall():
     def __init__(self, screen, x, y, width, heigth):
         self.screen = screen
         self.rect = [x, y, width, heigth]
-        draw.rect(self.screen, (100, 100, 100), tuple(self.rect))
+        self.screen.blit(Brick_Black, (self.rect[0], self.rect[1]))
         rects.append((self.rect, self.__class__))
         gameObjects.append(self)
 
     def redraw(self):
-        draw.rect(self.screen, (100, 100, 100), tuple(self.rect))
+        self.screen.blit(Brick_Black, (self.rect[0], self.rect[1]))
+
+
+class Floor():
+    def __init__(self, screen, x, y, width, heigth):
+        self.screen = screen
+        self.rect = [x, y, width, heigth]
+        self.screen.blit(Brick_Light, Rect(self.rect))
+        gameObjects.append(self)
+
+    def redraw(self):
+        self.screen.blit(Brick_Light, Rect(self.rect))
 
