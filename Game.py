@@ -32,7 +32,6 @@ class Game():
                 if e.type == QUIT:
                     running = False
 
-            print(dt)
             self.update()
             dt = clock.tick(60) / 1000
         
