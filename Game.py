@@ -10,10 +10,12 @@ screen = display.set_mode(size=(960, 640))
 # Configs
 objSize = 32
 TileMap = TiledMap("./map/mapa.tmx")
-white = Color(255, 255, 255, 255)
 
 class Init_screen:
     def __init__(self):
+        self.title = Label(FonteDefault, 20, screen)
+        self.title.set_text("Labirinto dos passáros")
+        self.title.draw_text((348, 0))
 
         self.loop()
     
@@ -31,11 +33,6 @@ class Init_screen:
     
     def update(self):
         global screen
-        screen.fill((0, 0, 0))
-        screen.blit(self.title, (screen.get_width() // 2, 20))
-        screen.blit(self.jogar, (screen.get_width() // 2, 450))
-        screen.blit(self.op, (screen.get_width() // 2, 500))
-        screen.blit(self.quit, (screen.get_width() // 2, 550))
 
         display.update()
 
