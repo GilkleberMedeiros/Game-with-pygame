@@ -7,13 +7,12 @@ from uiObjects import Label
 dt = 0.0
 screen = display.set_mode(size=(960, 640))
 
-# Configs
-objSize = 32
-TileMap = TiledMap("./map/mapa.tmx")
+
+TileMap = TiledMap(MAP_PATH)
 
 class Init_screen:
     def __init__(self):
-        self.title = Label(FonteDefault, 20, screen)
+        self.title = Label(DEFAULT_FONT, 20, screen)
         self.title.set_text("Labirinto dos passáros")
         self.title.draw_text((348, 0))
 
@@ -42,11 +41,11 @@ class Game():
         for layer in TileMap.layers:
             for obj in layer:
                 if obj[2] == 1:
-                    Wall(screen, obj[0] * objSize, obj[1] * objSize, objSize, objSize)
+                    Wall(screen, obj[0] * STANDARD_SIZE, obj[1] * STANDARD_SIZE, STANDARD_SIZE, STANDARD_SIZE)
                 else:
-                    Floor(screen, obj[0] * objSize, obj[1] * objSize, objSize, objSize)
+                    Floor(screen, obj[0] * STANDARD_SIZE, obj[1] * STANDARD_SIZE, STANDARD_SIZE, STANDARD_SIZE)
 
-        self.player = Player(screen, 32, 32, objSize, objSize)
+        self.player = Player(screen, 32, 32, STANDARD_SIZE, STANDARD_SIZE)
 
     def loop(self):
         global dt
