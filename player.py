@@ -6,11 +6,16 @@ class Player():
     def __init__(self, screen, x, y, width, heigth) -> None:
         self.screen = screen
         self.pos = [x, y, width, heigth]
-        self.rect = screen.blit(PlayerIdle, Rect(self.pos))
+        self.rect = screen.blit(PLAYER_IDLE, Rect(self.pos))
         rects.append((self.rect, self.__class__))
-        gameObjects.append(self)
+        game_objects.append(self)
 
-    def movement(self, dt) -> None:
+    def do_on_mainloop(self) -> None:
+        self.movement()
+        self.redraw()
+
+    def movement(self) -> None:
+        dt = get_data("dt")
         keys = key.get_pressed()
         if keys[K_LEFT] and self.colission((self.pos[0] / 1) - 1, "x"):
             self.pos[0] -= 30 * dt
@@ -22,7 +27,7 @@ class Player():
             self.pos[1] -= 30 * dt
 
     def redraw(self) -> None:
-        self.rect = self.screen.blit(PlayerIdle, Rect(self.pos))
+        self.rect = self.screen.blit(PLAYER_IDLE, Rect(self.pos))
     
     def colission(self, f_pos: float | int, direc: str) -> bool:
         """
@@ -95,21 +100,27 @@ class Wall():
     def __init__(self, screen, x, y, width, heigth):
         self.screen = screen
         self.rect = [x, y, width, heigth]
-        self.screen.blit(Brick_Black, (self.rect[0], self.rect[1]))
+        self.screen.blit(BRICK_BLACK, (self.rect[0], self.rect[1]))
         rects.append((self.rect, self.__class__))
-        gameObjects.append(self)
+        game_objects.append(self)
+
+    def do_on_mainloop(self) -> None:
+        self.redraw()
 
     def redraw(self):
-        self.screen.blit(Brick_Black, (self.rect[0], self.rect[1]))
+        self.screen.blit(BRICK_BLACK, (self.rect[0], self.rect[1]))
 
 
 class Floor():
     def __init__(self, screen, x, y, width, heigth):
         self.screen = screen
         self.rect = [x, y, width, heigth]
-        self.screen.blit(Brick_Light, Rect(self.rect))
-        gameObjects.append(self)
+        self.screen.blit(BRICK_LIGHT, Rect(self.rect))
+        game_objects.append(self)
+
+    def do_on_mainloop(self) -> None:
+        self.redraw()
 
     def redraw(self):
-        self.screen.blit(Brick_Light, Rect(self.rect))
+        self.screen.blit(BRICK_LIGHT, Rect(self.rect))
 
