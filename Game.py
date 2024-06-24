@@ -33,32 +33,25 @@ def mainloop(content):
 class Init_screen:
     def __init__(self):
         # Title label
-        self.title = Label(DEFAULT_FONT, 20, screen)
+        self.title = Label(DEFAULT_FONT, 20)
         self.title.set_surface("Labirinto dos passáros")
         self.title.redraw((348, 0))
 
         # Play Button
-        self.play_button = Button(DEFAULT_FONT, 16, screen, play_button_behavior, Game)
+        self.play_button = Button(DEFAULT_FONT, 16, play_button_behavior, Game)
         self.play_button.set_surface("Jogar: Espaço")
         self.play_button.redraw((415, 440))
-        #print(self.play_button.size("Jogar: Espaço"))
 
         # Quit Button
-        self.quit_button = Button(DEFAULT_FONT, 16, screen, lambda df: print(1 + 1), key=K_q)
+        self.quit_button = Button(DEFAULT_FONT, 16, lambda df: print(1 + 1), key=K_q)
         self.quit_button.set_surface("Sair: Q")
         self.quit_button.redraw((445, 490))
-        #print(self.quit_button.size("Sair: Q"))
         
-        ui_objects.append(self.title)
-        ui_objects.append(self.play_button)
-        ui_objects.append(self.quit_button)
     
     def update(self):
-        global screen
-        for obj in ui_objects:
-            if isinstance(obj, Button):
-                obj.listen()
-            obj.redraw()
+        objects = get_data("screen_objects")
+        for obj in objects:
+            obj.do_on_mainloop()
 
         display.update()
 
@@ -69,19 +62,18 @@ class Game():
         for layer in TileMap.layers:
             for obj in layer:
                 if obj[2] == 1:
-                    Wall(screen, obj[0] * STANDARD_SIZE, obj[1] * STANDARD_SIZE, STANDARD_SIZE, STANDARD_SIZE)
+                    Wall(obj[0] * STANDARD_SIZE, obj[1] * STANDARD_SIZE, STANDARD_SIZE, STANDARD_SIZE)
                 else:
-                    Floor(screen, obj[0] * STANDARD_SIZE, obj[1] * STANDARD_SIZE, STANDARD_SIZE, STANDARD_SIZE)
+                    Floor(obj[0] * STANDARD_SIZE, obj[1] * STANDARD_SIZE, STANDARD_SIZE, STANDARD_SIZE)
 
-        self.player = Player(screen, 32, 32, STANDARD_SIZE, STANDARD_SIZE)
+        self.player = Player(32, 32, STANDARD_SIZE, STANDARD_SIZE)
         
     def update(self):
-        global screen
-        self.player.movement()
-        screen.fill((0, 0, 0))
+        SCREEN.fill((0, 0, 0))
+        objects = get_data("screen_objects")
 
-        for obj in game_objects:
-            obj.redraw()
+        for obj in objects:
+            obj.do_on_mainloop()
         
         display.update()
 

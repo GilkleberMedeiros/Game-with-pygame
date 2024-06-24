@@ -4,14 +4,13 @@ from typing import Callable
 
 class Button(font.Font):
     def __init__(self, 
-                 font, 
+                 font: str, 
                  size: float, 
-                 screen: Surface,
                  action: Callable, 
                  *args: tuple,
                  key: int=K_SPACE):
         super().__init__(font, size)
-        self.screen = screen
+        self.screen = SCREEN
         self.__action = action
         self.__key = key
         self.__args = args
@@ -40,10 +39,9 @@ class Button(font.Font):
 class Label(font.Font):
     def __init__(self, 
                  font, 
-                 size: float, 
-                 screen: Surface):
+                 size: float):
         super().__init__(font, size)
-        self.screen = screen
+        self.screen = SCREEN
 
     def do_on_mainloop(self) -> None:
         self.redraw()

@@ -3,12 +3,12 @@ from Globals import *
 
 class Player():
     # '->' significa que a função retorna None
-    def __init__(self, screen, x, y, width, heigth) -> None:
-        self.screen = screen
+    def __init__(self, x, y, width, heigth) -> None:
+        self.screen = SCREEN
         self.pos = [x, y, width, heigth]
-        self.rect = screen.blit(PLAYER_IDLE, Rect(self.pos))
-        rects.append((self.rect, self.__class__))
-        game_objects.append(self)
+        self.rect = self.screen.blit(PLAYER_IDLE, Rect(self.pos))
+        append_data("collissors", (self.rect, self.__class__))
+        append_data("screen_objects", self)
 
     def do_on_mainloop(self) -> None:
         self.movement()
@@ -41,12 +41,14 @@ class Player():
         elif direc.lower() == "y":
             self.rect[1] = f_pos
 
+        collissors = get_data("collissors")
+
         # Corners of player rect
         corners = [[self.rect[0], self.rect[1]], # :left upper
                   [self.rect[0] + self.rect[2] - 1, self.rect[1]], # :right upper 
                   [self.rect[0], self.rect[1] + self.rect[3] - 1], # :left lower
                   [self.rect[0] + self.rect[2] - 1, self.rect[1] + self.rect[3] - 1]] # :right lower
-        for i in rects:
+        for i in collissors:
             if i[1] == Player:
                 continue
 
@@ -74,35 +76,15 @@ class Player():
             if xy1 or xy2 or xy3 or xy4:
                 return False
         return True
-
-    
-    def get_colission_list(self, rect: Rect, colission_list: list) -> list:
-        """
-            Remove a rect if is in a colission list
-            with +1 and -1 tolerance
-            param: rect, list
-            return: list
-        """
-        return_list = colission_list.copy()
-        for i in return_list:
-            count = 0
-            for j in i:
-                if j < rect[count] - 1 and j > rect[count] + 1:
-                    break
-                count += 1
-            else:
-                return_list.remove(i)
-
-        return return_list
     
 
 class Wall():
-    def __init__(self, screen, x, y, width, heigth):
-        self.screen = screen
+    def __init__(self, x, y, width, heigth):
+        self.screen = SCREEN
         self.rect = [x, y, width, heigth]
         self.screen.blit(BRICK_BLACK, (self.rect[0], self.rect[1]))
-        rects.append((self.rect, self.__class__))
-        game_objects.append(self)
+        append_data("collissors", (self.rect, self.__class__))
+        append_data("screen_objects", self)
 
     def do_on_mainloop(self) -> None:
         self.redraw()
@@ -112,11 +94,11 @@ class Wall():
 
 
 class Floor():
-    def __init__(self, screen, x, y, width, heigth):
-        self.screen = screen
+    def __init__(self, x, y, width, heigth):
+        self.screen = SCREEN
         self.rect = [x, y, width, heigth]
         self.screen.blit(BRICK_LIGHT, Rect(self.rect))
-        game_objects.append(self)
+        append_data("screen_objects", self)
 
     def do_on_mainloop(self) -> None:
         self.redraw()
