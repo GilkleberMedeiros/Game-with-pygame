@@ -65,7 +65,7 @@ class Label(font.Font):
 
 # Compotamento dos botões
 def play_button_behavior(screen_content: tuple[object]):
-    msg_storage.set_msg("instance", screen_content[0])
+    set_msg("instance", screen_content[0])
 
 def quit_button_behavior():
-    msg_storage.set_msg("stop", True)
+    set_msg("stop", True)

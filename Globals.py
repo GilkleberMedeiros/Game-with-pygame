@@ -1,5 +1,4 @@
 from pygame import *
-import msg_storage
 
 # Constantes
 # Imagens

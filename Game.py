@@ -14,15 +14,15 @@ def mainloop(content):
     content_to_load = content()
 
     while running:
-        instance_msg = msg_storage.get_msg("instance")
-        stop_msg = msg_storage.get_msg("stop")
+        instance_msg = get_msg("instance")
+        stop_msg = get_msg("stop")
 
         for e in event.get():
             if e.type == QUIT:
                 running = False
             elif instance_msg is not None:
                 content_to_load = instance_msg()
-                msg_storage.set_msg("instance", None)
+                set_msg("instance", None)
             elif stop_msg:
                 running = False
 
