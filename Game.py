@@ -26,9 +26,18 @@ def mainloop(content):
             elif stop_msg:
                 running = False
 
-        content_to_load.update()
+        update()
         dt = clock.tick(60) / 1000
         set_data("dt", dt)
+
+def update():
+        SCREEN.fill((0, 0, 0))
+        objects = get_data("screen_objects")
+
+        for obj in objects:
+            obj.do_on_mainloop()
+        
+        display.update()
 
 class Init_Screen:
     def __init__(self):
@@ -46,14 +55,6 @@ class Init_Screen:
         self.quit_button = Button(DEFAULT_FONT, 16, quit_button_behavior, key=K_q)
         self.quit_button.set_surface("Sair: Q")
         self.quit_button.redraw((445, 490))
-        
-    
-    def update(self):
-        objects = get_data("screen_objects")
-        for obj in objects:
-            obj.do_on_mainloop()
-
-        display.update()
 
 
 class Game():
@@ -68,14 +69,6 @@ class Game():
 
         self.player = Player(32, 32, STANDARD_SIZE, STANDARD_SIZE)
         
-    def update(self):
-        SCREEN.fill((0, 0, 0))
-        objects = get_data("screen_objects")
-
-        for obj in objects:
-            obj.do_on_mainloop()
-        
-        display.update()
 
 class End_Screen():
     def __init__(self):
@@ -92,15 +85,6 @@ class End_Screen():
         self.quit_button_pos = self.quit_button.size("Sair: Q")
         self.quit_button_pos = ((SCREEN_WIDTH // 2) - (self.quit_button_pos[0] // 2), 440)
         self.quit_button.redraw(self.quit_button_pos)
-        
-    def update(self):
-        SCREEN.fill((0, 0, 0))
-        objects = get_data("screen_objects")
-
-        for obj in objects:
-            obj.do_on_mainloop()
-        
-        display.update()
 
 
 if __name__ == "__main__":
