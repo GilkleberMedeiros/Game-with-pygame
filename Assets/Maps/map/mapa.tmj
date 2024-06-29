@@ -43,7 +43,7 @@
         {
          "columns":1,
          "firstgid":1,
-         "image":"Projetos\/Game-with-pygame\/Assets\/Brick_Black.png",
+         "image":"..\/..\/Sprites\/Brick_Black.png",
          "imageheight":32,
          "imagewidth":32,
          "margin":0,
@@ -55,7 +55,7 @@
         }, 
         {
          "firstgid":2,
-         "source":"..\/..\/Brick_Light.tsx"
+         "source":".\/Brick_Light.tsx"
         }],
  "tilewidth":32,
  "type":"map",

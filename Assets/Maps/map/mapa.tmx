@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-up" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="2" nextobjectid="1">
  <tileset firstgid="1" name="Brick_Black" source="./Brick_Black.tsx" tilewidth="32" tileheight="32" tilecount="1" columns="1">
-   <image source="./Assets/Brick_Black.png" width="32" height="32"/>
+   <image source="../../Sprites/Brick_Black.png" width="32" height="32"/>
  </tileset>
  <tileset firstgid="2" name="Brick_Light" source="./Brick_Light.tsx" tilewidth="32" tileheight="32" tilecount="1" columns="1">
-   <image source="./Assets/Brick_Light.png" width="32" height="32"/>
+   <image source="../../Sprites/Brick_Light.png" width="32" height="32"/>
  </tileset>
  <layer id="1" name="Camada de Blocos 1" width="30" height="20">
   <data encoding="csv">
