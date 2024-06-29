@@ -5,7 +5,7 @@ from ui_objects import *
 
 def main():
     init()
-    mainloop(Init_screen)
+    mainloop(Init_Screen)
     quit()
 
 def mainloop(content):
@@ -30,20 +30,20 @@ def mainloop(content):
         dt = clock.tick(60) / 1000
         set_data("dt", dt)
 
-class Init_screen:
+class Init_Screen:
     def __init__(self):
         # Title label
         self.title = Label(DEFAULT_FONT, 20)
         self.title.set_surface("Labirinto dos passáros")
-        self.title.redraw((348, 0))
+        self.title.redraw((348, 20))
 
         # Play Button
-        self.play_button = Button(DEFAULT_FONT, 16, play_button_behavior, Game)
+        self.play_button = Button(DEFAULT_FONT, 16, play_button_behavior, Game, key=K_SPACE)
         self.play_button.set_surface("Jogar: Espaço")
         self.play_button.redraw((415, 440))
 
         # Quit Button
-        self.quit_button = Button(DEFAULT_FONT, 16, lambda df: print(1 + 1), key=K_q)
+        self.quit_button = Button(DEFAULT_FONT, 16, quit_button_behavior, key=K_q)
         self.quit_button.set_surface("Sair: Q")
         self.quit_button.redraw((445, 490))
         
@@ -67,6 +67,31 @@ class Game():
                     Floor(obj[0] * STANDARD_SIZE, obj[1] * STANDARD_SIZE, STANDARD_SIZE, STANDARD_SIZE)
 
         self.player = Player(32, 32, STANDARD_SIZE, STANDARD_SIZE)
+        
+    def update(self):
+        SCREEN.fill((0, 0, 0))
+        objects = get_data("screen_objects")
+
+        for obj in objects:
+            obj.do_on_mainloop()
+        
+        display.update()
+
+class End_Screen():
+    def __init__(self):
+        # Thanks Label
+        self.thanks = Label(DEFAULT_FONT, 20)
+        self.thanks.set_surface("Obrigado por jogar!!!")
+        self.thanks_pos = self.thanks.size("Obrigado por jogar!!!")
+        self.thanks_pos = ((SCREEN_WIDTH // 2) - (self.thanks_pos[0] // 2), 20)
+        self.thanks.redraw(self.thanks_pos)
+
+        # Quit Button
+        self.quit_button = Button(DEFAULT_FONT, 16, quit_button_behavior, key=K_q)
+        self.quit_button.set_surface("Sair: Q")
+        self.quit_button_pos = self.quit_button.size("Sair: Q")
+        self.quit_button_pos = ((SCREEN_WIDTH // 2) - (self.quit_button_pos[0] // 2), 440)
+        self.quit_button.redraw(self.quit_button_pos)
         
     def update(self):
         SCREEN.fill((0, 0, 0))

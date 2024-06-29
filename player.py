@@ -16,6 +16,7 @@ class Player():
 
     def movement(self) -> None:
         dt = get_data("dt")
+        
         keys = key.get_pressed()
         if keys[K_LEFT] and self.colission((self.pos[0] / 1) - 1, "x"):
             self.pos[0] -= 30 * dt

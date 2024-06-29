@@ -11,7 +11,9 @@ BRICK_BLACK = image.load("Assets/Sprites/Brick_Black.png")
 DEFAULT_FONT = "./Assets/Fonts/RobotoMono/RobotoMono-VariableFont_wght.ttf"
 
 # Tela
-SCREEN = display.set_mode(size=(960, 640))
+SCREEN_WIDTH = 960
+SCREEN_HEIGHT = 640
+SCREEN = display.set_mode(size=(SCREEN_WIDTH, SCREEN_HEIGHT))
 
 # Cores
 WHITE = (255, 255, 255, 255)
@@ -23,9 +25,9 @@ MAP_PATH = "./Assets/Maps/map/mapa.tmx"
 STANDARD_SIZE = 32
 
 
+# Transferidor de dados
 data = {"collissors": [], "screen_objects": [], "dt": 0.0}
 
-# Transferidor de dados
 def get_data(name: str) -> any:
     try:
         return data[name]

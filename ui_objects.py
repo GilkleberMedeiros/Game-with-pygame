@@ -14,6 +14,7 @@ class Button(font.Font):
         self.__action = action
         self.__key = key
         self.__args = args
+        append_data("screen_objects", self)
     
     def do_on_mainloop(self) -> None:
         self.listen()
@@ -33,7 +34,10 @@ class Button(font.Font):
     def listen(self):
         keys = key.get_pressed()
         if keys[self.__key]:
-            self.__action(self.__args)
+            if self.__args:
+                self.__action(self.__args)
+            else:
+                self.__action()
         
 
 class Label(font.Font):
@@ -42,6 +46,7 @@ class Label(font.Font):
                  size: float):
         super().__init__(font, size)
         self.screen = SCREEN
+        append_data("screen_objects", self)
 
     def do_on_mainloop(self) -> None:
         self.redraw()
@@ -54,6 +59,7 @@ class Label(font.Font):
             pos = self.__pos
         else:
             self.__pos = pos
+        
         self.screen.blit(self.surface, pos)
 
 
