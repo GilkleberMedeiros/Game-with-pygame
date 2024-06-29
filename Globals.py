@@ -25,9 +25,9 @@ MAP_PATH = "./Assets/Maps/map/mapa.tmx"
 STANDARD_SIZE = 32
 
 
-# Transferidor de dados
 data = {"collissors": [], "screen_objects": [], "dt": 0.0}
 
+# Transferidor de dados
 def get_data(name: str) -> any:
     try:
         return data[name]
@@ -45,3 +45,13 @@ def append_data(name: str, value: any) -> None:
         data[name].append(value)
     except:
         return None
+    
+
+# Sistema de mensagens
+msgs = {"stop": False, "instance": None}
+
+def get_msg(key):
+    return msgs[key]
+
+def set_msg(key, value):
+    msgs[key] = value
