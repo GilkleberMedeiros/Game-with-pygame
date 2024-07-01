@@ -5,6 +5,10 @@ from pygame import *
 PLAYER_IDLE = image.load("Assets/Sprites/Personagem.png")
 BRICK_LIGHT = image.load("Assets/Sprites/Brick_Light.png")
 BRICK_BLACK = image.load("Assets/Sprites/Brick_Black.png")
+KEY_SPRITE = image.load("Assets/Sprites/Key.png")
+
+# Sons
+KEY_COLLECT_SONG = "Assets/Songs/Key_Collect_Song.wav"
 
 # Fontes
 DEFAULT_FONT = "./Assets/Fonts/RobotoMono/RobotoMono-VariableFont_wght.ttf"

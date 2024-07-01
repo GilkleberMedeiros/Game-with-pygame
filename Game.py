@@ -39,6 +39,7 @@ def update():
         
         display.update()
 
+
 class Init_Screen:
     def __init__(self):
         # Title label
@@ -67,6 +68,9 @@ class Game():
                 else:
                     Floor(obj[0] * STANDARD_SIZE, obj[1] * STANDARD_SIZE, STANDARD_SIZE, STANDARD_SIZE)
 
+        Key((STANDARD_SIZE * 1, STANDARD_SIZE * 10, STANDARD_SIZE, STANDARD_SIZE))
+        Key((STANDARD_SIZE * 20, STANDARD_SIZE * 5, STANDARD_SIZE, STANDARD_SIZE))
+        Key((STANDARD_SIZE * 16, STANDARD_SIZE * 17, STANDARD_SIZE, STANDARD_SIZE))
         self.player = Player(32, 32, STANDARD_SIZE, STANDARD_SIZE)
         
 
